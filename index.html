@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Circle Drawing Example</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var radius = 50;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function drawCircle(x, y) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+        canvas.addEventListener("click", function (event) {
+            var x = event.clientX - canvas.offsetLeft;
+            var y = event.clientY - canvas.offsetTop;
+            var distance = Math.sqrt((x - 100) ** 2 + (y - 75) ** 2);
+            if (distance <= 50) {
+                console.log("Circle clicked at " + new Date());
+            }
+        });
+        window.addEventListener("mousemove", function (event) {
+            var x = event.clientX;
+            var y = event.clientY;
+            drawCircle(x, y);
+        });
+    </script>
+</body>
+
+</html>
