@@ -1,0 +1,3 @@
+[submodule "lycoris"]
+	path = lycoris
+	url = https://github.com/mildsky/lycoris.git
