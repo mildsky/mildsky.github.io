@@ -1,2 +1,3 @@
-# mildsky.github.io
-github blog
+# [mildsky.github.io](https://mildsky.github.io)
+
+;ㅁ;
