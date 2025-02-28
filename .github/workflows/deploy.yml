@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Auto Build & Publish
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
         run: python lycoris ./src ./build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./build  # The folder that contains your generated site
 
