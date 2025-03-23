@@ -1,86 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Responsive Three-Body Gravity Simulation</title>
+        <style>
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <title>Responsive Three-Body Gravity Simulation</title>
-    <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+            svg {
+                width: 100vw;
+                height: 100vh;
+            }
+        </style>
+        </head>
 
-        svg {
-            width: 100vw;
-            height: 100vh;
-        }
-    </style>
-</head>
+    <body>
+        <svg id="gravity-simulation">
+            <circle id="circle1" cx="200" cy="300" r="20" fill="blue" />
+            <circle id="circle2" cx="600" cy="300" r="20" fill="red" />
+            <circle id="circle3" cx="400" cy="100" r="20" fill="green" />
+        </svg>
 
-<body>
+        <script>
+            const G = 10; // Gravitational constant
+            const timeStep = 1;
+                const svg = document.getElementById("gravity-simulation");
 
-    <svg id="gravity-simulation">
-        <circle id="circle1" cx="200" cy="300" r="20" fill="blue" />
-        <circle id="circle2" cx="600" cy="300" r="20" fill="red" />
-        <circle id="circle3" cx="400" cy="100" r="20" fill="green" />
-    </svg>
+                const bodies = [
+                { element: document.getElementById("circle1"), x: 200, y: 300, vx: 0, vy: 0, mass: 10 },
+                { element: document.getElementById("circle2"), x: 600, y: 300, vx: 0, vy: 0, mass: 10 },
+                { element: document.getElementById("circle3"), x: 400, y: 100, vx: 0, vy: 0, mass: 10 },
+            ];
 
-    <script>
-        const G = 10; // Gravitational constant
-        const timeStep = 1;
-        const svg = document.getElementById('gravity-simulation');
+                // Update positions based on gravitational pull
+                function update() {
+                    for (let i = 0; i < bodies.length; i++) {
+                        let fx = 0;
+                        let fy = 0;
 
-        const bodies = [
-            { element: document.getElementById('circle1'), x: 200, y: 300, vx: 0, vy: 0, mass: 10 },
-            { element: document.getElementById('circle2'), x: 600, y: 300, vx: 0, vy: 0, mass: 10 },
-            { element: document.getElementById('circle3'), x: 400, y: 100, vx: 0, vy: 0, mass: 10 }
-        ];
+                    for (let j = 0; j < bodies.length; j++) {
+                        if (i !== j) {
+                            const dx = bodies[j].x - bodies[i].x;
+                            const dy = bodies[j].y - bodies[i].y;
+                            const distance = Math.max(Math.sqrt(dx * dx + dy * dy), 25);
 
-        // Update positions based on gravitational pull
-        function update() {
-            for (let i = 0; i < bodies.length; i++) {
-                let fx = 0;
-                let fy = 0;
-
-                for (let j = 0; j < bodies.length; j++) {
-                    if (i !== j) {
-                        const dx = bodies[j].x - bodies[i].x;
-                        const dy = bodies[j].y - bodies[i].y;
-                        const distance = Math.max(Math.sqrt(dx * dx + dy * dy), 25);
-
-                        const force = (G * bodies[i].mass * bodies[j].mass) / (distance * distance);
-                        fx += (force * dx) / distance;
-                        fy += (force * dy) / distance;
+                            const force = (G * bodies[i].mass * bodies[j].mass) / (distance * distance);
+                            fx += (force * dx) / distance;
+                            fy += (force * dy) / distance;
+                        }
                     }
+
+                    bodies[i].vx += fx / bodies[i].mass;
+                    bodies[i].vy += fy / bodies[i].mass;
                 }
 
-                bodies[i].vx += fx / bodies[i].mass;
-                bodies[i].vy += fy / bodies[i].mass;
+                // Update position and transformations
+                for (const body of bodies) {
+                    body.x += body.vx * timeStep;
+                    body.y += body.vy * timeStep;
+                    body.element.setAttribute("transform", `translate(${body.x - body.element.getAttribute("cx")}, ${body.y - body.element.getAttribute("cy")})`);
+                }
+
+                requestAnimationFrame(update);
             }
 
-            // Update position and transformations
-            for (const body of bodies) {
-                body.x += body.vx * timeStep;
-                body.y += body.vy * timeStep;
-                body.element.setAttribute('transform', `translate(${body.x - body.element.getAttribute('cx')}, ${body.y - body.element.getAttribute('cy')})`);
+                // Adjust SVG size dynamically
+                function resizeSVG() {
+                svg.setAttribute("width", window.innerWidth);
+                svg.setAttribute("height", window.innerHeight);
             }
 
-            requestAnimationFrame(update);
-        }
-
-        // Adjust SVG size dynamically
-        function resizeSVG() {
-            svg.setAttribute('width', window.innerWidth);
-            svg.setAttribute('height', window.innerHeight);
-        }
-
-        window.addEventListener('resize', resizeSVG);
-        resizeSVG(); // Initial setup
-        update();    // Start the simulation
-    </script>
-
-</body>
-
+                window.addEventListener("resize", resizeSVG);
+                resizeSVG(); // Initial setup
+                update(); // Start the simulation
+            </script>
+    </body>
 </html>

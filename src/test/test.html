@@ -1,1 +1,357 @@
-this is test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document with Collapsible Sidebar</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Top Navbar */
+    .navbar {
+      background-color: #1e1e1e;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-shrink: 0;
+    }
+
+    .navbar .brand {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .navbar .nav-links a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+    }
+
+    .navbar .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Main layout: sidebar + content */
+    .layout {
+      display: flex;
+      flex-grow: 1;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f4f4f4;
+      padding: 15px;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      margin: 5px 0;
+      text-decoration: none;
+      color: #333;
+      font-size: 0.9em;
+    }
+
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Content expands automatically */
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+    }
+
+    /* Collapsed layout */
+    .layout.collapsed .sidebar {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+      border-right: none;
+    }
+
+    .layout.collapsed .content {
+      flex-grow: 1;
+    }
+
+    /* Toggle button */
+    .sidebar-toggle {
+      position: absolute;
+      left: 10px;
+      top: 60px;
+      z-index: 1000;
+      background-color: #1e1e1e;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar-toggle {
+        top: 55px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="brand">🔗 MySite</div>
+    <div class="nav-links">
+      <a href="/me.html">Me</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/hobbies.html">Hobbies</a>
+    </div>
+  </div>
+
+  <button class="sidebar-toggle" onclick="toggleSidebar()">📑</button>
+
+  <div class="layout" id="layout">
+    <div class="sidebar" id="sidebar">
+      <h3>📄 Contents</h3>
+      <a href="#intro">Introduction</a>
+      <a href="#features">Features</a>
+      <a href="#usage">Usage</a>
+      <a href="#plugins">Plugins</a>
+      <a href="#conclusion">Conclusion</a>
+    </div>
+
+    <div class="content">
+      <h1 id="intro">Introduction</h1>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+      <p>This layout keeps the sidebar and content side by side without overlap.</p>
+
+      <h2 id="features">Features</h2>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+      <p>Sidebar collapses, content resizes with flexbox.</p>
+
+      <h2 id="usage">Usage</h2>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+      <p>No JavaScript layout jumping, and fully responsive.</p>
+
+      <h2 id="plugins">Plugins</h2>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+      <p>Extend with your Python plugin pipeline easily.</p>
+
+      <h2 id="conclusion">Conclusion</h2>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+      <p>This is how modern sites stack elements horizontally with no overlaps!</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("layout").classList.toggle("collapsed");
+    }
+  </script>
+</body>
+</html>

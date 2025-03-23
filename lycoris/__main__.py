@@ -154,32 +154,19 @@ class HTMLBuilder:
         self.body_elements = []
         self.filename = None
         self.relative_path = None
-    def insertEtree(self, where, etree):
-        if where == 'head':
-            self.head.append(etree)
-        elif where == 'body':
-            self.body.append(etree)
     def build(self, mdtree):
         for style in self.styles:
             style_element = etree.Element('style')
             style_element.text = style
             self.head.append(style_element)
+        for element in self.head_elements:
+            self.head.append(element)
         for script in self.scripts:
             script_element = etree.Element('script')
             script_element.text = script
             self.body.append(script_element)
-        for element in self.head_elements:
-            self.head.append(element)
         for element in self.body_elements:
             self.body.append(element)
-    def addStyle(self, style):
-        self.styles.append(style)
-    def addScript(self, script):
-        self.scripts.append(script)
-    def addHeadElement(self, element):
-        self.head_elements.append(element)
-    def addBodyElement(self, element):
-        self.body_elements.append(element)
     def fromMarkdown(self, input_dir, markdown: str):
         filename = markdown
         dirname = os.path.dirname(markdown)
@@ -194,14 +181,27 @@ class HTMLBuilder:
         return etree.tostring(self.html, doctype="<!DOCTYPE html>", pretty_print=True).decode()
     def toHTML(self, output_dir: str):
         output_file = f"{output_dir}/{self.filename}.html"
+        dirname = os.path.dirname(output_file)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
         print(f"Writing to {output_file}")
         with open(output_file, 'x', encoding='utf-8') as out:
             out.write(self.toString())
         return self.toString()
-    def cleanBuild(self, build_dir):
-        for root, _, files in os.walk(build_dir):
-            for file in files:
-                os.remove(os.path.join(root, file))
+    def clean(self, build_dir, sure=False):
+        if not sure:
+            print(f"Are you sure you want to delete all files in {build_dir}?")
+            print("below files will be deleted")
+            for root, _, files in os.walk(build_dir):
+                for file in files:
+                    print(f"- {os.path.join(root, file)}")
+            print("Type 'yes' to confirm")
+            if input().lower() == 'yes':
+                sure = True
+        if sure:
+            for root, _, files in os.walk(build_dir):
+                for file in files:
+                    os.remove(os.path.join(root, file))
 
 app = typer.Typer()
 
@@ -209,13 +209,15 @@ app = typer.Typer()
 def build(input_dir: str, output_dir: str):
     print(f"Building {input_dir} to {output_dir}")
     md_files = find_markdown_files(input_dir)
-    print(md_files)
+    print(f"found {len(md_files)} markdown files")
+    for md in md_files:
+        print(f"- {md}")
+    builder = HTMLBuilder()
+    builder.clean(build_dir=output_dir)
     for md_file in md_files:
         parser = MarkdownParser(md_file, input_dir, output_dir)
         pprint(parser.parseMarkdown())
-        exit()
         builder = HTMLBuilder()
-        builder.cleanBuild(output_dir)
         builder.fromMarkdown(input_dir, md_file)
         builder.toHTML(output_dir)
         # with open(md_file, 'r', encoding='utf-8') as src:
@@ -224,5 +226,10 @@ def build(input_dir: str, output_dir: str):
     # for html_file in html_files:
     #     with open(html_file, 'r', encoding='utf-8') as src:
     #         print(src.read())
+
+@app.command()
+def clean(build_dir: str, sure: bool = False):
+    builder = HTMLBuilder()
+    builder.clean(build_dir, sure)
 
 app()
