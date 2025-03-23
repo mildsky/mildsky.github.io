@@ -190,18 +190,23 @@ class HTMLBuilder:
         return self.toString()
     def clean(self, build_dir, sure=False):
         if not sure:
-            print(f"Are you sure you want to delete all files in {build_dir}?")
             print("below files will be deleted")
             for root, _, files in os.walk(build_dir):
                 for file in files:
                     print(f"- {os.path.join(root, file)}")
-            print("Type 'yes' to confirm")
-            if input().lower() == 'yes':
+            if input(f"Are you sure you want to delete all files in {build_dir}?[yes/no]").lower() == 'yes':
                 sure = True
+            else:
+                print("Aborted.")
+                return False
         if sure:
             for root, _, files in os.walk(build_dir):
                 for file in files:
+                    print(f"Deleting {os.path.join(root, file)}")
                     os.remove(os.path.join(root, file))
+                    time.sleep(0.1)
+            print("Cleaning done.")
+        return True
 
 app = typer.Typer()
 
