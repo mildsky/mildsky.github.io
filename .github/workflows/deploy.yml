@@ -21,7 +21,7 @@ jobs:
         run: mkdir build
       - name: Convert Markdown to HTML
         id: build
-        run: python lycoris ./src ./build
+        run: python lycoris build ./src ./build
       - name: Upload artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
