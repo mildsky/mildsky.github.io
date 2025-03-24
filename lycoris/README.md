@@ -17,3 +17,4 @@ Static site generator from Markdown files
     - [ ] Lists
 - Hyperlink graph
 - [Github Flavord Markdown Syntax](https://github.github.com/gfm/)
+- css generator

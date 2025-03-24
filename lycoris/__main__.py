@@ -1,9 +1,8 @@
-import os, time, sys
-import typer
-from lxml import etree, html
-# from .plugin import *
-import re   # regex
+import os, time, sys, re
 from dataclasses import dataclass
+import typer
+from lxml import etree
+from plugin import navibar, sidebar
 
 '''
 code excution flow
@@ -218,7 +217,7 @@ def build(input_dir: str, output_dir: str):
     for md in md_files:
         print(f"- {md}")
     builder = HTMLBuilder()
-    builder.clean(build_dir=output_dir)
+    builder.clean(build_dir=output_dir, sure=True)
     for md_file in md_files:
         parser = MarkdownParser(md_file, input_dir, output_dir)
         pprint(parser.parseMarkdown())
