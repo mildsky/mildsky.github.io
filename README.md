@@ -8,3 +8,4 @@
 - Works
 - Studies
 - Loves
+- Memorials

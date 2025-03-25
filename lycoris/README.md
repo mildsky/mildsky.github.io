@@ -18,3 +18,8 @@ Static site generator from Markdown files
 - Hyperlink graph
 - [Github Flavord Markdown Syntax](https://github.github.com/gfm/)
 - css generator
+- navigation bar generator
+- sidebar generator
+    - timeline
+    - index
+- search engine
