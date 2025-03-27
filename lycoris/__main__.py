@@ -22,13 +22,14 @@ class Lycoris:
     graph is n by n array where n is the number of nodes.
     if graph[i][j] == 1, then there is a link from node i to node j
     '''
+    categories = []
     def __init__(self, input_dir, output_dir):
         self.input_dir = input_dir
         self.output_dir = output_dir
-    def pprint(element, **kwargs):
+    def pprint(self, element, **kwargs):
         xml = etree.tostring(element, pretty_print=True, **kwargs)
         print(xml.decode())
-    def find_markdown_files(search_dir):
+    def find_markdown_files(self, search_dir):
         """ Recursively find all markdown files in a directory """
         md_files = []
         for root, _, files in os.walk(search_dir):
@@ -36,7 +37,7 @@ class Lycoris:
                 if file.endswith(".md"):
                     md_files.append(os.path.join(root, file))
         return md_files
-    def find_html_files(search_dir):
+    def find_html_files(self, search_dir):
         """ Recursively find all html files in a directory """
         html_files = []
         for root, _, files in os.walk(search_dir):
@@ -54,11 +55,10 @@ class Lycoris:
         - filename
         - last modified date
         - created date
-        - category = dirname
+        - category
         - tags
         - 
         '''
-        metadata.set('filepath', filepath)
         metadata.set('dirname', os.path.relpath(os.path.dirname(filepath), self.input_dir)) # assume input_dir is the root
         metadata.set('filename', os.path.basename(filepath))
         content = etree.SubElement(root, 'content')
@@ -66,9 +66,14 @@ class Lycoris:
         with open(filepath, 'r', encoding='utf-8') as src:
             for line in src:
                 line = line.rstrip()
-                if line.startswith('!'):
-                    # do custom logic
-                    pass
+                if re.match(r'^!category', line):
+                    category = line.split(' ')[1].strip()
+                    metadata.set('category', category)
+                    self.categories.append(category)
+                elif re.match(r'^!tags', line):
+                    tags = etree.SubElement(metadata, 'tags')
+                    for tag in line.split(' ')[1:]:
+                        etree.SubElement(tags, 'tag').text = tag
                 # if line.startswith('```'):
                 #     if self.context is None:
                 #         self.context = 'code'
@@ -103,33 +108,33 @@ class Lycoris:
                 # paragraph = etree.SubElement(self.content, 'p')
                 # paragraph.text = line
                 # check line by line for markdown syntax using regex
-                elif line.startswith('#'):
-                    # add heading
-                    print(line)
-                elif line.startswith('##'):
-                    print(line)
-                elif line.startswith('###'):
-                    print(line)
-                elif line.startswith('####'):
-                    print(line)
-                elif line.startswith('#####'):
-                    print(line)
-                elif line.startswith('######'):
-                    print(line)
-                elif line.startswith('```') and context is None:
-                    # start code block
-                    print(line)
-                elif line.startswith('```') and context is not None:
-                    # end code block
-                    print(line)
-                elif line.startswith('*'):
-                    # list
-                    print(line)
-                elif line.startswith('1.'):
-                    # ordered list
-                    print(line)
-                else:
-                    print(line)
+                # elif line.startswith('#'):
+                #     # add heading
+                #     print(line)
+                # elif line.startswith('##'):
+                #     print(line)
+                # elif line.startswith('###'):
+                #     print(line)
+                # elif line.startswith('####'):
+                #     print(line)
+                # elif line.startswith('#####'):
+                #     print(line)
+                # elif line.startswith('######'):
+                #     print(line)
+                # elif line.startswith('```') and context is None:
+                #     # start code block
+                #     print(line)
+                # elif line.startswith('```') and context is not None:
+                #     # end code block
+                #     print(line)
+                # elif line.startswith('*'):
+                #     # list
+                #     print(line)
+                # elif line.startswith('1.'):
+                #     # ordered list
+                #     print(line)
+                # else:
+                #     print(line)
         return root
     def interprocess(self, etree):
         # add top bar
@@ -149,8 +154,8 @@ class Lycoris:
         scripts = []
         head_elements = []
         body_elements = []
-        filename = None
-        relative_path = None
+        filename = mdtree.find('metadata').get('filename').replace('.md', '')
+        dirname = mdtree.find('metadata').get('dirname')
         for style in styles:
             style_element = etree.Element('style')
             style_element.text = style
@@ -167,8 +172,8 @@ class Lycoris:
             # print(f"<!DOCTYPE html>\n{etree.tostring(self.html, pretty_print=True).decode()}")
             return etree.tostring(html, doctype="<!DOCTYPE html>", pretty_print=True).decode()
         else:
-            output_file = f"{self.output_dir}/{filename}.html"
-            dirname = os.path.dirname(output_file)
+            output_file = f"{self.output_dir}/{dirname}/{filename}.html"
+            dirname = f"{self.output_dir}/{dirname}"
             if not os.path.exists(dirname):
                 os.makedirs(dirname)
             print(f"Writing to {output_file}")
@@ -209,6 +214,7 @@ app = typer.Typer()
 @app.command()
 def build(input_dir: str, output_dir: str):
     lyco = Lycoris(input_dir, output_dir)
+    lyco.clean(output_dir, sure=True)
     print(f"Building {input_dir} to {output_dir}")
     md_files = lyco.find_markdown_files(input_dir)
     html_files = lyco.find_html_files(input_dir)
